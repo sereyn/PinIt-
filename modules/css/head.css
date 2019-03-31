@@ -7,4 +7,43 @@ html, body{
     height: 100%;
     background: rgb(2,74,109);
     background: linear-gradient(126deg, rgba(2,74,109,1) 2%, rgba(64,178,196,1) 15%, rgba(2,74,109,1) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.btn{
+    padding: 5px;
+    font-size: 100%;
+    border: transparent;
+    text-decoration: none;
+    background-color: #319AB0;
+    color: white;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn:hover{
+    background-color: rgb(43, 139, 158);
+}
+
+.input{
+    color: #444;
+    background-color: white;
+    border-radius: 0;
+    border: 1px solid #666;
+    font-size: 20px;
+    padding: 2px;
+}
+
+.input:focus, .input:hover{
+    border: 1px solid black;
 }
