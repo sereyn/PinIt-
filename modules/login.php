@@ -2,16 +2,16 @@
 
 <div class="wrapper">
     <div id="logo">
-        <img src="/images/logo.png" alt="Logo PinIt!"/>
+        <img src="./images/logo.png" alt="Logo PinIt!"/>
     </div>
 
     <div id="form-login-holder">
         <form id="form-login" method="POST">
             <div id="avatar">
-                <img alt="avatar" src="/images/clem.jpg">
+                <img alt="avatar" src="./images/user.png">
             </div>
             <label for="username">Username</label>
-            <input type="text" class="input" id="username" name="username">
+            <input autofocus type="text" class="input" id="username" name="username">
             <br>
             <label for="password">Password</label>
             <input type="password" class="input" id="password" name="password">
