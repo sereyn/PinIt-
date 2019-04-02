@@ -1,3 +1,7 @@
+*{
+    transition: 0.1s;
+}
+
 html, body{
     font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
     background-repeat: no-repeat;
@@ -10,13 +14,15 @@ html, body{
     display: flex;
     justify-content: center;
     align-items: center;
+    scroll-behavior: smooth;
 }
 
 .wrapper{
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+    height: 100%;
+    width: 100%;
 }
 
 .btn{
@@ -46,4 +52,19 @@ html, body{
 
 .input:focus, .input:hover{
     border: 1px solid black;
+}
+
+@media screen and (max-width: 500px){
+    html, body{
+        overflow-x: hidden;
+    }
+
+    .input{
+        height: 40px;
+        width: 90% !important;
+    }
+
+    .btn{
+        height: 40px;
+    }
 }
