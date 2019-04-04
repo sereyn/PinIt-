@@ -1,4 +1,5 @@
 <link rel="stylesheet" type="text/css" href="modules/css/login.css">
+<script src="./modules/js/login.js"></script>
 
 <div class="wrapper">
     <div id="logo">
@@ -9,6 +10,9 @@
         <form id="form-login" method="POST">
             <div id="avatar">
                 <img alt="avatar" src="./images/user.png">
+            </div>
+            <div class="box_error" id="wrong_credentials">
+                Wrong credentials
             </div>
             <label for="username">Username</label>
             <input autofocus type="text" class="input" id="username" name="username">

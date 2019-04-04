@@ -54,6 +54,18 @@ html, body{
     border: 1px solid black;
 }
 
+.box_error{
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    font-size: 16px;
+    font-weight: normal;
+    width: 60%;
+    padding: 10px;
+    text-align: center;
+    border-radius: 2px;
+}
+
 @media screen and (max-width: 500px){
     html, body{
         overflow-x: hidden;
@@ -66,5 +78,9 @@ html, body{
 
     .btn{
         height: 40px;
+    }
+
+    .box_error{
+        width: 90% !important;
     }
 }

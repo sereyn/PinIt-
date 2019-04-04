@@ -44,6 +44,10 @@
     justify-content: center;
 }
 
+#wrong_credentials{
+    display: none;
+}
+
 @media screen and (max-width: 500px){
     #form-login-holder{
         width: 100%;
