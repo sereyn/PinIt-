@@ -11,4 +11,6 @@ include("scripts/logutils.php");
     <title>PinIt!</title>
     
     <link rel="stylesheet" type="text/css" href="modules/css/head.css">
+
+    <script src="modules/js/head.js"></script>
 </head>

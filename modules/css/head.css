@@ -7,14 +7,17 @@ html, body{
     background-repeat: no-repeat;
     margin: 0;
     padding: 0;
-    width: 100%;
-    height: 100%;
-    background: rgb(2,74,109);
-    background: linear-gradient(126deg, rgba(2,74,109,1) 2%, rgba(64,178,196,1) 15%, rgba(2,74,109,1) 100%);
     display: flex;
     justify-content: center;
     align-items: center;
     scroll-behavior: smooth;
+}
+
+html{
+    min-width: 100%;
+    min-height: 100%;
+    background: rgb(2,74,109);
+    background: linear-gradient(126deg, rgba(2,74,109,1) 2%, rgba(64,178,196,1) 15%, rgba(2,74,109,1) 100%);
 }
 
 .wrapper{
@@ -39,6 +42,17 @@ html, body{
 
 .btn:hover{
     background-color: rgb(43, 139, 158);
+}
+
+.btn_inverse{
+    background-color: rgba(0, 0, 0, 0);
+    color: #319ab0;
+    border: 1px solid #319ab0;
+    transition: 0.2s;
+}
+
+.btn_inverse:hover{
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .input{
@@ -79,6 +93,7 @@ html, body{
 
     .btn{
         height: 40px;
+        width: 90% !important;
     }
 
     .box_error{

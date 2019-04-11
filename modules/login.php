@@ -20,7 +20,8 @@
             <label for="password">Password</label>
             <input type="password" class="input" id="password" name="password">
             <br>
-            <input type="submit" class="btn" value="Login">
+            <input type="submit" class="btn" value="Login" id="in_form_button">
         </form>
+        <input type="button" class="btn btn_inverse" value="Register" id="out_form_button">
     </div>
 </div>

@@ -9,6 +9,7 @@
     color: #074d79;
     font-weight: 600;
     font-size: 20px;
+    text-align: center;
 }
 
 #form-login{
@@ -16,16 +17,20 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    text-align: left;
 }
 
 #form-login > label, #form-login > input[type="submit"]{
     display: block;
     margin-top: 10px;
+}
+
+#form-login > *, #out_form_button{
     width: 60%;
 }
 
-#form-login > input[type="password"], #form-login > input[type="text"]{
-    width: 60%;
+#out_form_button{
+    margin: 10px;
 }
 
 #avatar{
@@ -60,7 +65,7 @@
     #logo{
         text-align: center;
     }
-    #form-login > label, #form-login > input[type="submit"]{
-        width: 90%;
+    #form-login > label{
+        width: 90% !important;
     }
 }
