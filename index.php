@@ -10,7 +10,10 @@ error_reporting(E_ALL);
 <!DOCTYPE html>
 
 <html>
-    <?php include("modules/head.php"); ?>
+    <?php 
+        include("vars.php");
+        include("modules/head.php"); 
+    ?>
     <body>
         <?php
             if(isset($_SESSION["username"])){

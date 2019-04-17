@@ -38,6 +38,10 @@
     justify-content: center;
 }
 
+#bad_entries{
+    display: none;
+}
+
 @media screen and (max-width: 500px){
     #form-register-holder{
         width: 100%;
