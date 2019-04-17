@@ -15,6 +15,13 @@ error_reporting(E_ALL);
         <?php
             if(isset($_SESSION["username"])){
                 include("modules/userhomepage.php");
+            }else if(isset($_GET["page"])){
+                $page = safetize($_GET["page"]);
+                if($page == "register"){
+                    include("modules/register.php");
+                }else{
+                    include("modules/login.php");
+                }
             }else{
                 include("modules/login.php");
             }

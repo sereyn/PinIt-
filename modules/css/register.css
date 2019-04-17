@@ -1,4 +1,4 @@
-#form-login-holder{
+#form-register-holder{
     border-radius: 3px;
     width: 400px;
     padding: 10px;
@@ -12,49 +12,34 @@
     text-align: center;
 }
 
-#form-login{
+#form-register{
     width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
     text-align: left;
+    margin-top: 20px;
 }
 
-#form-login > label, #form-login > input[type="submit"]{
+#form-register > label, #form-register > input[type="submit"]{
     display: block;
     margin-top: 10px;
 }
 
-#form-login > *, #register_button{
+#form-register > *, #login_button{
     width: 60%;
 }
 
-#register_button{
+#login_button{
     margin: 10px;
-}
-
-#avatar{
-    width: 150px;
-    height: 150px;
-    margin-top: -90px;
-}
-
-#avatar > img{
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
 }
 
 .wrapper{
     justify-content: center;
 }
 
-#wrong_credentials{
-    display: none;
-}
-
 @media screen and (max-width: 500px){
-    #form-login-holder{
+    #form-register-holder{
         width: 100%;
         height: 100%;
     }
@@ -65,7 +50,7 @@
     #logo{
         text-align: center;
     }
-    #form-login > label{
+    #form-register > label{
         width: 90% !important;
     }
 }

@@ -1,5 +1,9 @@
 <?php
 
+function safetize($txt){
+    return htmlspecialchars($txt);
+}
+
 function check_credentials($username, $password){
     return false;
 }

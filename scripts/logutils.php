@@ -2,8 +2,8 @@
 
 /* Check login credentials */
 if(isset($_POST["username"])){ /* form is sent */
-    $username = htmlspecialchars($_POST["username"]);
-    $password = htmlspecialchars($_POST["password"]);
+    $username = safetize($_POST["username"]);
+    $password = safetize($_POST["password"]);
 
     if(check_credentials($username, $password)){ /* right creds */
         $_SESSION["username"] = $username;

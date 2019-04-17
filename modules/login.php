@@ -15,13 +15,13 @@
                 Wrong credentials
             </div>
             <label for="username">Username</label>
-            <input autofocus type="text" class="input" id="username" name="username">
+            <input autofocus type="text" class="input" name="username">
             <br>
             <label for="password">Password</label>
-            <input type="password" class="input" id="password" name="password">
+            <input type="password" class="input" name="password">
             <br>
-            <input type="submit" class="btn" value="Login" id="in_form_button">
+            <input type="submit" class="btn" value="Login">
         </form>
-        <input type="button" class="btn btn_inverse" value="Register" id="out_form_button">
+        <input type="button" class="btn btn_inverse" value="Register" id="register_button" onclick="document.location.href = '?page=register'">
     </div>
 </div>
