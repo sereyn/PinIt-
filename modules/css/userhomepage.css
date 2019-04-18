@@ -1,0 +1,64 @@
+#panel_holder{
+    position: fixed;
+    bottom: 0;
+    flex-direction: row;
+    height: 100%;
+}
+
+#left_panel{
+    height: 100%;
+    width: 260px;
+    background-color: white;
+    box-shadow: 0 0 5px 0 black;
+}
+
+#right_panel{
+    height: 100%;
+    flex-grow: 1;
+
+}
+
+#profile_bar{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #d0c4ac;
+}
+
+#avatar_holder{
+    height: 80%;
+    margin-left: 10px;
+}
+
+#avatar{
+    height: 100%;
+}
+
+#profile_bar > p{
+    width: 100%;
+    text-align: center;
+}
+
+#list_boards{
+    height: calc(100% - 100px);
+    overflow: auto;
+}
+
+.board > p {
+    padding-left: 10px;
+    margin: 0;
+}
+
+.board{
+    border-bottom: 1px solid #AAA;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.board:hover{
+    background-color: #EEE;
+    cursor: pointer;
+}
