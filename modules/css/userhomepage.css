@@ -10,6 +10,7 @@
     width: 260px;
     background-color: white;
     box-shadow: 0 0 5px 0 black;
+    position: relative;
 }
 
 #right_panel{
@@ -25,6 +26,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    background-color: rgb(35, 117, 206);
     background-color: #d0c4ac;
 }
 
@@ -45,6 +47,23 @@
 #list_boards{
     height: calc(100% - 100px);
     overflow: auto;
+}
+
+#button_container{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    margin-right: 15px;
+}
+
+#button_container > div{
+    cursor: pointer;
+}
+
+#button_container > div:active{
+    transform: scale(1.05);
 }
 
 .board > p {

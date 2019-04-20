@@ -21,6 +21,17 @@ try{
             "PRIMARY KEY (`id`)".
         ");".
     "");
+
+    /* boards table creation */
+    $db->query("".
+        "CREATE TABLE IF NOT EXISTS `boards` (".
+            "`id` INT AUTO_INCREMENT,".
+            "`name` VARCHAR(255),".
+            "`owner` VARCHAR(255) NOT NULL,".
+            "PRIMARY KEY (`id`)".
+        ");".
+    "");
+    
 }catch(PDOException $err){
     echo($err->getMessage());
 }
