@@ -11,12 +11,13 @@
     background-color: white;
     box-shadow: 0 0 5px 0 black;
     position: relative;
+    z-index: 10;
 }
 
 #right_panel{
     height: 100%;
     flex-grow: 1;
-
+    position: relative;
 }
 
 #profile_bar{
@@ -62,8 +63,28 @@
     cursor: pointer;
 }
 
-#button_container > div:active{
+#button_container > div:active, #settings:active, #add_canvas:active{
     transform: scale(1.05);
+}
+
+#settings{
+    background-color: transparent;
+    position: absolute;
+    top: 20px;
+    right: calc(100% - 25px);
+    z-index: 1;
+    cursor: pointer;
+}
+
+#add_canvas{
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    cursor: pointer;
+}
+
+#add_canvas > img{
+    border-radius: 50%;
 }
 
 .board > p {

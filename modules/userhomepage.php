@@ -19,15 +19,21 @@
             </div>
         </div>
         <div id="button_container">
-            <div id="del_board_button">
-                <img id="avatar" alt="avatar" src="./images/add.png" width="50px">
-            </div>
             <div id="add_board_button">
-                <img id="avatar" alt="avatar" src="./images/del.png" width="50px">
+                <img alt="add" src="./images/ui/add2.png" width="50px">
+            </div>
+            <div id="del_board_button">
+                <img alt="del" src="./images/ui/del.png" width="50px">
             </div>
         </div>
     </div>
     <div id="right_panel">
+        <div id="settings">
+            <img alt="tools" src="./images/ui/settings-6.png" width="50px">
+        </div>
+        <div id="add_canvas">
+            <img alt="tools" src="./images/ui/add-2.png" width="50px">
+        </div>
     </div>
     
 </div>
