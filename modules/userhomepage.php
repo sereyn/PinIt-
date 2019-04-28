@@ -14,9 +14,6 @@
             </p>
         </div>
         <div id="list_boards">
-            <div class="board">
-                <p>My board</p>
-            </div>
         </div>
         <div id="button_container">
             <div id="add_board_button">
@@ -31,8 +28,16 @@
         <div id="settings">
             <img alt="tools" src="./images/ui/settings-6.png" width="50px">
         </div>
-        <div id="add_canvas">
-            <img alt="tools" src="./images/ui/add-2.png" width="50px">
+        <div id="postit_button_holder">
+            <div id="add_postit">
+                <img alt="tools" src="./images/ui/add-2.png" width="50px">
+            </div>
+            <div id="del_postit">
+                <img alt="tools" src="./images/ui/multiply-1.png" width="50px">
+            </div>
+        </div>
+        <div id="postit_holder">
+            
         </div>
     </div>
     

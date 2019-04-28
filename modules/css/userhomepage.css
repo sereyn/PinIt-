@@ -57,13 +57,15 @@
     display: flex;
     flex-direction: column;
     margin-right: 15px;
+    transform: translateY(60px);
+    transition: 0.4s cubic-bezier(.75,-0.5,0,1.75);
 }
 
 #button_container > div{
     cursor: pointer;
 }
 
-#button_container > div:active, #settings:active, #add_canvas:active{
+#button_container > div:active, #settings:active, #add_postit:active, #del_postit:active{
     transform: scale(1.05);
 }
 
@@ -76,14 +78,28 @@
     cursor: pointer;
 }
 
-#add_canvas{
+#postit_button_holder{
     position: absolute;
     bottom: 0;
-    right: 10px;
+    right: 18px;
+    z-index: 10;
+    transform: translateY(120px);
+    transition: 0.4s cubic-bezier(.75,-0.5,0,1.75);
+}
+
+.postit_button_holder_up1{
+    transform: translateY(60px) !important;
+}
+
+.postit_button_holder_up2{
+    transform: translateY(0) !important;
+}
+
+#postit_button_holder > *{
     cursor: pointer;
 }
 
-#add_canvas > img{
+#postit_button_holder img{
     border-radius: 50%;
 }
 
@@ -101,4 +117,32 @@
 .board:hover{
     background-color: #EEE;
     cursor: pointer;
+}
+
+#postit_holder{
+    display: flex;
+    flex-wrap: wrap;
+    position: fixed;
+    padding-left: 20px;
+    overflow-y: auto;
+    max-height: 100%;
+}
+
+.postit{
+    width: 200px;
+    height: 200px;
+    background-color: white;
+    margin: 20px;
+    padding: 10px;
+    box-shadow: 4px 3px 4px 0 rgba(0, 0, 0, 0.4);
+    overflow-y: auto;
+}
+
+.postit > p{
+    user-select: text;
+    white-space: pre-line;
+}
+
+.board_button_show{
+    transform: translateY(0) !important;
 }

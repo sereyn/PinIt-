@@ -22,4 +22,9 @@ $req->bindParam(':n', $_POST["title"]);
 $req->bindParam(':o', $_SESSION["username"]);
 $req->execute();
 
+$id = $db->lastInsertId();
+$path = "../postits/" . $id;
+
+mkdir($path);
+
 ?>
