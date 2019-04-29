@@ -29,6 +29,7 @@
     justify-content: center;
     background-color: rgb(35, 117, 206);
     background-color: #d0c4ac;
+    border-bottom: 1px solid #AAA;
 }
 
 #avatar_holder{
@@ -73,9 +74,13 @@
     background-color: transparent;
     position: absolute;
     top: 20px;
-    right: calc(100% - 25px);
+    right: calc(100%);
     z-index: 1;
     cursor: pointer;
+}
+
+.available_settings{
+    right: calc(100% - 25px) !important;
 }
 
 #postit_button_holder{

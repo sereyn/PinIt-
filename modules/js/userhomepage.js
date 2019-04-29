@@ -11,6 +11,8 @@ var postitHolder;
 var addPostitButton;
 var delPostitButton;
 var buttonPostitHolder;
+
+var settingsButton;
 //
 
 var timers = [];
@@ -125,7 +127,9 @@ function fillPostitHolder(id){
         postitHolder.appendChild(newDiv);
     }
 
+    settingsButton.setAttribute("class", "available_settings");
     buttonPostitHolder.setAttribute("class", "postit_button_holder_up1");
+
 }
 
 function addBoard(title){
@@ -140,6 +144,8 @@ function addBoard(title){
         boardid_selected = undefined;
         postitHolder.innerHTML = "";
         boardButtonContainer.setAttribute("class", "");
+        buttonPostitHolder.setAttribute("class", "");
+        settingsButton.setAttribute("class", "");
     }
 }
 
@@ -155,6 +161,8 @@ function delBoard(id){
         boardid_selected = undefined;
         postitHolder.innerHTML = "";
         boardButtonContainer.setAttribute("class", "");
+        buttonPostitHolder.setAttribute("class", "");
+        settingsButton.setAttribute("class", "");
     }
 }
 
@@ -206,6 +214,8 @@ window.addEventListener("load", function(){
     delPostitButton = document.getElementById("del_postit");
     buttonPostitHolder = document.getElementById("postit_button_holder");
 
+    settingsButton = document.getElementById("settings");
+
     // save before quitting
     window.addEventListener("beforeunload", function(){
         saveBoard();
@@ -248,6 +258,7 @@ window.addEventListener("load", function(){
 
         pNewBoard.addEventListener("focusout", function(){
             addBoard(pNewBoard.innerText);
+            
         });
 
         //add to the beginning
@@ -261,6 +272,9 @@ window.addEventListener("load", function(){
         range.selectNodeContents(pNewBoard);
         selection.removeAllRanges();
         selection.addRange(range);
+
+        buttonPostitHolder.setAttribute("class", "");
+        settingsButton.setAttribute("class", "");
         
     });
 
