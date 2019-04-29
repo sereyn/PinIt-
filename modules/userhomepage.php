@@ -2,6 +2,12 @@
 <script>var session = "<?php echo(session_id()) ?>"; </script>
 <script src="./modules/js/userhomepage.js"></script>
 
+<div id="settings_window">
+    <div id="close_settings_button">
+        <img alt="close" src="./images/ui/del.png" width="50px">
+    </div>
+</div>
+
 <div class="wrapper" id="panel_holder">
     <div id="left_panel">
         <div id="profile_bar">
@@ -30,10 +36,10 @@
         </div>
         <div id="postit_button_holder">
             <div id="add_postit">
-                <img alt="tools" src="./images/ui/add-2.png" width="50px">
+                <img alt="add" src="./images/ui/add-2.png" width="50px">
             </div>
             <div id="del_postit">
-                <img alt="tools" src="./images/ui/multiply-1.png" width="50px">
+                <img alt="del" src="./images/ui/multiply-1.png" width="50px">
             </div>
         </div>
         <div id="postit_holder">

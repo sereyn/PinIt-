@@ -6,6 +6,8 @@ error_reporting(E_ALL);
 include("vars.php");
 
 try{
+    mkdir("./postits", 0775);
+
     /* db creation */
     $db = new PDO("mysql:host=$db_host", $db_user, $db_password);
     $db->query("CREATE DATABASE IF NOT EXISTS `$db_name`");
@@ -28,6 +30,17 @@ try{
             "`id` INT AUTO_INCREMENT,".
             "`name` VARCHAR(255),".
             "`owner` VARCHAR(255) NOT NULL,".
+            "PRIMARY KEY (`id`)".
+        ");".
+    "");
+
+    /* rights table creation */
+    $db->query("".
+        "CREATE TABLE IF NOT EXISTS `rights` (".
+            "`id` INT AUTO_INCREMENT,".
+            "`boardid` INT NOT NULL,".
+            "`user` VARCHAR(255) NOT NULL,".
+            "`rights` VARCHAR(255) NOT NULL,".
             "PRIMARY KEY (`id`)".
         ");".
     "");

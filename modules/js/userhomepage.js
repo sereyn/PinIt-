@@ -13,6 +13,8 @@ var delPostitButton;
 var buttonPostitHolder;
 
 var settingsButton;
+var settingsWindow;
+var closeSettingsButton;
 //
 
 var timers = [];
@@ -215,6 +217,16 @@ window.addEventListener("load", function(){
     buttonPostitHolder = document.getElementById("postit_button_holder");
 
     settingsButton = document.getElementById("settings");
+    settingsWindow = document.getElementById("settings_window");
+    closeSettingsButton = document.getElementById("close_settings_button");
+
+    // settings
+    settingsButton.addEventListener("click", function(){
+        settingsWindow.style.display = "block";
+    });
+    closeSettingsButton.addEventListener("click", function(){
+        settingsWindow.style.display = "none";
+    });
 
     // save before quitting
     window.addEventListener("beforeunload", function(){

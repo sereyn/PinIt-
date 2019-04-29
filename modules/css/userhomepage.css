@@ -1,3 +1,19 @@
+#settings_window{
+    display: none;
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background-color: white
+}
+
+#close_settings_button{
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+
 #panel_holder{
     position: fixed;
     bottom: 0;
@@ -66,7 +82,7 @@
     cursor: pointer;
 }
 
-#button_container > div:active, #settings:active, #add_postit:active, #del_postit:active{
+#button_container > div:active, #settings:active, #add_postit:active, #del_postit:active, #close_settings_button:active{
     transform: scale(1.05);
 }
 
