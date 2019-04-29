@@ -13,6 +13,8 @@ var delPostitButton;
 var buttonPostitHolder;
 //
 
+var timers = [];
+
 function fillBoardsList(){
     var req = new XMLHttpRequest();
     var res;
@@ -32,6 +34,16 @@ function fillBoardsList(){
         var newDiv = document.createElement("div");
         newDiv.setAttribute("class", "board");
         newDiv.addEventListener("click", function(){
+            // clear save intervals
+            timers.forEach(function(el){
+                clearInterval(el);
+            });
+            timers = [];
+            // save all postits
+            Array.from(postitHolder.children).forEach(function(el){
+                savePostit(el.getAttribute("postitid"), boardid_selected, el.innerText);
+            });
+            // change board
             newDiv.focus();
             fillPostitHolder(v.id);
             boardid_selected = v.id;
@@ -48,6 +60,19 @@ function fillBoardsList(){
         newDiv.innerHTML = "<p>" + v.name + "</p>";
         boardList.appendChild(newDiv);
     });
+}
+
+function savePostit(id, boardid, text, refresh=false){
+    var req = new XMLHttpRequest();
+
+    req.open("POST", "/requests/savePostit.php", false);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.send("id=" + id + "&boardid=" + boardid + "&text=" + text);
+
+    if(req.status == 200){
+        if(refresh)
+            fillPostitHolder(boardid_selected);
+    }
 }
 
 function fillPostitHolder(id){
@@ -68,15 +93,33 @@ function fillPostitHolder(id){
         var newDiv = document.createElement("div");
         newDiv.setAttribute("contenteditable", "true");
         newDiv.setAttribute("class", "postit");
+        newDiv.setAttribute("postitid", v);
         newDiv.innerHTML = "<p>" + res[v] + "</p>";
 
         newDiv.addEventListener("focusout", function(){
-            buttonPostitHolder.setAttribute("class", "postit_button_holder_up1")
+            buttonPostitHolder.setAttribute("class", "postit_button_holder_up1");
         });
 
-        newDiv.addEventListener("focusin", function(){
-            postitid_selected = v;
-            buttonPostitHolder.setAttribute("class", "postit_button_holder_up2")
+        newDiv.addEventListener("focusin", function(e){
+            postitid_selected = e.target.getAttribute("postitid");
+            buttonPostitHolder.setAttribute("class", "postit_button_holder_up2");
+        });
+
+        var currTime = 0;
+        var timer;
+        newDiv.addEventListener("keydown", function(e){
+            currTime = 0;
+            if(timer == undefined){
+                timer = setInterval(function(){
+                    if(currTime > 2){
+                        clearInterval(timer);
+                        timer = undefined;
+                        savePostit(postitid_selected, boardid_selected, e.target.innerText, true);
+                    }
+                    currTime++;
+                }, 1000);
+                timers.push(timer);
+            }
         });
 
         postitHolder.appendChild(newDiv);
@@ -139,6 +182,18 @@ function delPostit(id, boardid){
     }
 }
 
+function saveBoard(){
+    // clear save intervals
+    timers.forEach(function(el){
+        clearInterval(el);
+    });
+    timers = [];
+    // save all postits
+    Array.from(postitHolder.children).forEach(function(el){
+        savePostit(el.getAttribute("postitid"), boardid_selected, el.innerText);
+    });
+}
+
 window.addEventListener("load", function(){
     // dom elements
     boardList = document.getElementById("list_boards");
@@ -151,9 +206,20 @@ window.addEventListener("load", function(){
     delPostitButton = document.getElementById("del_postit");
     buttonPostitHolder = document.getElementById("postit_button_holder");
 
+    // save before quitting
+    window.addEventListener("beforeunload", function(){
+        saveBoard();
+     });
+
     //postit button mapping 
-    addPostitButton.addEventListener("click", addPostit);
+    addPostitButton.addEventListener("click", function(){
+        saveBoard();
+        // add postit
+        addPostit();
+    });
     delPostitButton.addEventListener("click", function(){
+        saveBoard();
+        // del postit
         delPostit(postitid_selected, boardid_selected);
     });
 
