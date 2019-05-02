@@ -15,6 +15,9 @@ var buttonPostitHolder;
 var settingsButton;
 var settingsWindow;
 var closeSettingsButton;
+
+var boardNameInput;
+var boardNameApply;
 //
 
 var timers = [];
@@ -37,6 +40,7 @@ function fillBoardsList(){
     res.forEach(function(v){
         var newDiv = document.createElement("div");
         newDiv.setAttribute("class", "board");
+        newDiv.setAttribute("boardid", v.id);
         newDiv.addEventListener("click", function(){
             // clear save intervals
             timers.forEach(function(el){
@@ -204,6 +208,18 @@ function saveBoard(){
     });
 }
 
+function setBoardName(id, name){
+    var req = new XMLHttpRequest();
+
+    req.open("POST", "/requests/setBoardName.php", false);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.send("id=" + id + "&name=" + name);
+
+    if(req.status == 200){
+        fillBoardsList();
+    }
+}
+
 window.addEventListener("load", function(){
     // dom elements
     boardList = document.getElementById("list_boards");
@@ -220,9 +236,19 @@ window.addEventListener("load", function(){
     settingsWindow = document.getElementById("settings_window");
     closeSettingsButton = document.getElementById("close_settings_button");
 
+    boardNameInput = document.getElementById("board_name_input");
+    boardNameApply = document.getElementById("board_name_apply");
+
     // settings
     settingsButton.addEventListener("click", function(){
         settingsWindow.style.display = "block";
+
+        var boardnameselected = "";
+        Array.from(boardList.children).forEach(function(el){
+            if(el.getAttribute("boardid") == boardid_selected.toString()){
+                boardNameInput.setAttribute("value", el.innerText);
+            }
+        });
     });
     closeSettingsButton.addEventListener("click", function(){
         settingsWindow.style.display = "none";
@@ -288,6 +314,18 @@ window.addEventListener("load", function(){
         buttonPostitHolder.setAttribute("class", "");
         settingsButton.setAttribute("class", "");
         
+    });
+
+    // board settings mapping
+    boardNameApply.addEventListener("click", function(){
+        setBoardName(boardid_selected, boardNameInput.value);
+    });
+
+    boardNameInput.addEventListener("keydown", function(e){
+        if(e.which == 13){
+            e.preventDefault();
+            setBoardName(boardid_selected, boardNameInput.value);
+        }
     });
 
     fillBoardsList();

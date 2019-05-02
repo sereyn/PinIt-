@@ -6,6 +6,13 @@
     <div id="close_settings_button">
         <img alt="close" src="./images/ui/del.png" width="50px">
     </div>
+    <div id="settings_holder">
+        <form class="setting_form">
+            <label>Board name: </label>
+            <input id="board_name_input" type="text">
+            <input id="board_name_apply" type="button" value="Apply">
+        </form>
+    </div>
 </div>
 
 <div class="wrapper" id="panel_holder">

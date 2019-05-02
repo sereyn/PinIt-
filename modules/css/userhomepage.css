@@ -167,3 +167,7 @@
 .board_button_show{
     transform: translateY(0) !important;
 }
+
+.setting_form{
+    margin: 10px;
+}
