@@ -23,6 +23,12 @@ if($_POST["demand"] == "owned"){
     $req->execute();
     $res = $req->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($res);
+}else if($_POST["demand"] == "rights"){
+    $req = $db->prepare("SELECT boards.id, `name`, `owner`, `userid`, `rights` FROM rights INNER JOIN boards ON boards.id = `boardid` WHERE userid = :i;");
+    $req->bindParam(':i', $_POST["userid"]);
+    $req->execute();
+    $res = $req->fetchAll(PDO::FETCH_ASSOC);
+    echo(json_encode($res));
 }
 
 ?>

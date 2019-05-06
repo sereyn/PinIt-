@@ -169,6 +169,19 @@
     transform: translateY(0) !important;
 }
 
-.setting_form{
+#rights_table{
+    border-collapse: collapse;
+}
+
+#rights_table td{
+    border: 1px solid black;
+    padding: 10px;
+}
+
+#settings_holder{
+    padding: 10px;
+}
+
+#settings_holder > *{
     margin: 10px;
 }

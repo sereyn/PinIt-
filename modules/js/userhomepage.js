@@ -17,12 +17,78 @@ var settingsWindow;
 var closeSettingsButton;
 
 var boardNameInput;
-var boardNameApply;
+
+var rightsTable;
+var rightsTableAdd;
+
 //
 
 var timers = [];
 
+function userToId(name){
+    var req = new XMLHttpRequest();
+    var res;
+
+    req.open("POST", "/requests/userToId.php", false);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.send("user=" + name);
+
+    if(req.status == 200){
+        res = JSON.parse(req.responseText);
+        return parseInt(res.id);
+    }else{
+        return;
+    }
+}
+
+function idToUser(id){
+    var req = new XMLHttpRequest();
+    var res;
+
+    req.open("POST", "/requests/idToUser.php", false);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.send("userid=" + id);
+
+    if(req.status == 200){
+        res = JSON.parse(req.responseText);
+        return res.username;
+    }else{
+        return;
+    }
+}
+
+function fillRightsTable(boardid){
+    // owned
+    var req = new XMLHttpRequest();
+    var res;
+
+    req.open("POST", "/requests/getBoardRights.php", false);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.send("boardid=" + boardid);
+
+    if(req.status == 200){
+        res = JSON.parse(req.responseText);
+        for(var i = 0; i < rightsTable.rows.length; i++){
+            rightsTable.deleteRow(i);
+        }
+    }else{
+        return;
+    }
+
+    res.forEach(function(v){
+        var newRow = rightsTable.insertRow(0);
+
+        var cellName = newRow.insertCell(0);
+        var cellRights = newRow.insertCell(1);
+        var cellDel = newRow.insertCell(2);
+        cellName.innerHTML = "<p contenteditable='true'>" + idToUser(v.userid) + "</p>";
+        cellRights.innerHTML = '<input type="checkbox">Write';
+        cellDel.innerHTML = 'X';
+    });
+}
+
 function fillBoardsList(){
+    // owned
     var req = new XMLHttpRequest();
     var res;
 
@@ -32,16 +98,40 @@ function fillBoardsList(){
 
     if(req.status == 200){
         res = JSON.parse(req.responseText);
-        boardList.innerHTML = "";
     }else{
         return;
     }
 
-    res.forEach(function(v){
+    // with rights
+    var reqr = new XMLHttpRequest();
+    var resr;
+
+    reqr.open("POST", "/requests/getBoards.php", false);
+    reqr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    reqr.send("demand=rights&userid=" + userToId(username));
+
+    if(reqr.status == 200){
+        resr = JSON.parse(reqr.responseText);
+    }else{
+        return;
+    }
+
+    boardList.innerHTML = "";
+
+    // total
+    var tot = res.concat(resr);
+
+    for(var key in tot){
+        var v = tot[key];
         var newDiv = document.createElement("div");
         newDiv.setAttribute("class", "board");
         newDiv.setAttribute("boardid", v.id);
-        newDiv.addEventListener("click", function(){
+        newDiv.addEventListener("click", function(ev){
+            var target = ev.target;
+            if(ev.target.tagName == "P"){
+                target = ev.target.parentNode;
+            }
+            var targetID = target.getAttribute("boardid");
             // clear save intervals
             timers.forEach(function(el){
                 clearInterval(el);
@@ -52,22 +142,23 @@ function fillBoardsList(){
                 savePostit(el.getAttribute("postitid"), boardid_selected, el.innerText);
             });
             // change board
-            newDiv.focus();
-            fillPostitHolder(v.id);
-            boardid_selected = v.id;
+            target.focus();
+            fillPostitHolder(targetID);
+            boardid_selected = targetID;
 
             /* color */
             Array.from(boardList.children).forEach(function(val){
                 val.style.backgroundColor = "#FFF";
             });
-            newDiv.style.backgroundColor = "#CCC";
+            target.style.backgroundColor = "#CCC";
 
             boardButtonContainer.setAttribute("class", "board_button_show");
+
         });
         
         newDiv.innerHTML = "<p>" + v.name + "</p>";
         boardList.appendChild(newDiv);
-    });
+    }
 }
 
 function savePostit(id, boardid, text, refresh=false){
@@ -241,6 +332,9 @@ window.addEventListener("load", function(){
     boardNameInput = document.getElementById("board_name_input");
     boardNameApply = document.getElementById("board_name_apply");
 
+    rightsTable = document.getElementById("rights_table");
+    rightsTableAdd = document.getElementById("rights_table_add");
+
     // settings
     settingsButton.addEventListener("click", function(){
         settingsWindow.style.display = "block";
@@ -251,9 +345,26 @@ window.addEventListener("load", function(){
                 boardNameInput.setAttribute("value", el.innerText);
             }
         });
+
+        fillRightsTable(boardid_selected);
     });
     closeSettingsButton.addEventListener("click", function(){
+        /* save */
+        setBoardName(boardid_selected, boardNameInput.value);
+
+        /* quit */
         settingsWindow.style.display = "none";
+    });
+
+    rightsTableAdd.addEventListener("click", function(){
+        var newRow = rightsTable.insertRow(0);
+
+        var cellName = newRow.insertCell(0);
+        var cellRights = newRow.insertCell(1);
+        var cellDel = newRow.insertCell(2);
+        cellName.innerHTML = "<p contenteditable='true'>username</p>"
+        cellRights.innerHTML = '<input type="checkbox">Write';
+        cellDel.innerHTML = 'X';
     });
 
     // save before quitting
@@ -316,18 +427,6 @@ window.addEventListener("load", function(){
         buttonPostitHolder.setAttribute("class", "");
         settingsButton.setAttribute("class", "");
         
-    });
-
-    // board settings mapping
-    boardNameApply.addEventListener("click", function(){
-        setBoardName(boardid_selected, boardNameInput.value);
-    });
-
-    boardNameInput.addEventListener("keydown", function(e){
-        if(e.which == 13){
-            e.preventDefault();
-            setBoardName(boardid_selected, boardNameInput.value);
-        }
     });
 
     fillBoardsList();

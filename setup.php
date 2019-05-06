@@ -39,9 +39,11 @@ try{
         "CREATE TABLE IF NOT EXISTS `rights` (".
             "`id` INT AUTO_INCREMENT,".
             "`boardid` INT NOT NULL,".
-            "`user` VARCHAR(255) NOT NULL,".
+            "`userid` INT NOT NULL,".
             "`rights` VARCHAR(255) NOT NULL,".
-            "PRIMARY KEY (`id`)".
+            "PRIMARY KEY (`id`),".
+            "FOREIGN KEY (`boardid`) REFERENCES `boards` (`id`) ON DELETE CASCADE,".
+            "FOREIGN KEY (`userid`) REFERENCES `users` (`id`) ON DELETE CASCADE".
         ");".
     "");
     

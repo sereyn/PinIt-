@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="modules/css/userhomepage.css">
-<script>var session = "<?php echo(session_id()) ?>"; </script>
+<script>var session = "<?php echo(session_id()) ?>"; var username = "<?php echo($_SESSION["username"]) ?>"; </script>
 <script src="./modules/js/userhomepage.js"></script>
 
 <div id="settings_window">
@@ -9,9 +9,13 @@
     <div id="settings_holder">
         <form class="setting_form">
             <label>Board name: </label>
-            <input id="board_name_input" type="text">
-            <input id="board_name_apply" type="button" value="Apply">
+            <input id="board_name_input" class="input" type="text">
         </form>
+
+        <p>Rights:</p>
+        <table id="rights_table">
+        </table>
+        <input class="btn" id="rights_table_add" type="button" value="Add">
     </div>
 </div>
 
