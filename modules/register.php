@@ -12,13 +12,13 @@
                 
             </div>
             <label for="username">Username</label>
-            <input autofocus type="text" class="input" name="username">
+            <input autofocus id="username" type="text" class="input" name="username">
             <br>
             <label for="password">Password</label>
-            <input type="password" class="input" name="password">
+            <input id="password" type="password" class="input" name="password">
             <br>
             <label for="password-conf">Confirm password</label>
-            <input type="password" class="input" name="password-conf">
+            <input id="password-conf" type="password" class="input" name="password-conf">
             <br>
             <input type="submit" class="btn" name="register" value="Register" id="in_form_button">
         </form>

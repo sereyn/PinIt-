@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
     <?php 
         include("vars.php");
         include("modules/head.php"); 

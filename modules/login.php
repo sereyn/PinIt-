@@ -15,10 +15,10 @@
                 Wrong credentials
             </div>
             <label for="username">Username</label>
-            <input autofocus type="text" class="input" name="username">
+            <input autofocus id="username" type="text" class="input" name="username">
             <br>
             <label for="password">Password</label>
-            <input type="password" class="input" name="password">
+            <input id="password" type="password" class="input" name="password">
             <br>
             <input type="submit" class="btn" name="login" value="Login">
         </form>

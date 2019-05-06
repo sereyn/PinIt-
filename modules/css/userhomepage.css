@@ -17,6 +17,7 @@
 #panel_holder{
     position: fixed;
     bottom: 0;
+    left: 0;
     flex-direction: row;
     height: 100%;
 }
