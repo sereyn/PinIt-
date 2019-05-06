@@ -98,13 +98,16 @@ function fillPostitHolder(id){
         return;
     }
     for(var v in res){
+        var timer;
         var newDiv = document.createElement("div");
         newDiv.setAttribute("contenteditable", "true");
         newDiv.setAttribute("class", "postit");
         newDiv.setAttribute("postitid", v);
         newDiv.innerHTML = "<p>" + res[v] + "</p>";
 
-        newDiv.addEventListener("focusout", function(){
+        newDiv.addEventListener("focusout", function(e){
+            clearInterval(timer);
+            savePostit(postitid_selected, boardid_selected, e.target.innerText, false);
             buttonPostitHolder.setAttribute("class", "postit_button_holder_up1");
         });
 
@@ -114,7 +117,6 @@ function fillPostitHolder(id){
         });
 
         var currTime = 0;
-        var timer;
         newDiv.addEventListener("keydown", function(e){
             currTime = 0;
             if(timer == undefined){

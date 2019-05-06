@@ -4,7 +4,7 @@
 
 <div id="settings_window">
     <div id="close_settings_button">
-        <img alt="close" src="./images/ui/del.png" width="50px">
+        <img alt="close" src="./images/ui/del.png" width="50">
     </div>
     <div id="settings_holder">
         <form class="setting_form">
@@ -30,23 +30,23 @@
         </div>
         <div id="button_container">
             <div id="add_board_button">
-                <img alt="add" src="./images/ui/add2.png" width="50px">
+                <img alt="add" src="./images/ui/add2.png" width="50">
             </div>
             <div id="del_board_button">
-                <img alt="del" src="./images/ui/del.png" width="50px">
+                <img alt="del" src="./images/ui/del.png" width="50">
             </div>
         </div>
     </div>
     <div id="right_panel">
         <div id="settings">
-            <img alt="tools" src="./images/ui/settings-6.png" width="50px">
+            <img alt="tools" src="./images/ui/settings-6.png" width="50">
         </div>
         <div id="postit_button_holder">
             <div id="add_postit">
-                <img alt="add" src="./images/ui/add-2.png" width="50px">
+                <img alt="add" src="./images/ui/add-2.png" width="50">
             </div>
             <div id="del_postit">
-                <img alt="del" src="./images/ui/multiply-1.png" width="50px">
+                <img alt="del" src="./images/ui/multiply-1.png" width="50">
             </div>
         </div>
         <div id="postit_holder">
