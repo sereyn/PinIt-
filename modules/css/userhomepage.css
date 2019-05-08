@@ -185,3 +185,8 @@
 #settings_holder > *{
     margin: 10px;
 }
+
+.owned {
+    color: green;
+    font-weight: bold;
+}

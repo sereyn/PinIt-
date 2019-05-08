@@ -58,6 +58,17 @@ body{
     transition: 0.2s;
 }
 
+.btn:disabled{
+    background-color: rgba(0, 0, 0, 0);
+    color: #319ab0;
+    border: 1px solid #319ab0;
+    transition: 0.2s;
+}
+
+.btn:disabled:hover{
+    background-color: initial !important;
+}
+
 .btn:hover{
     background-color: rgb(43, 139, 158);
 }

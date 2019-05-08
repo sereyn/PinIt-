@@ -1,6 +1,8 @@
 var boardid_selected;
 var postitid_selected;
 
+var boards = {};
+
 // dom elements
 var boardList;
 var addBoardButton;
@@ -24,6 +26,23 @@ var rightsTableAdd;
 //
 
 var timers = [];
+
+function addRights(userid, boardid, rights){
+    var req = new XMLHttpRequest();
+    var res;
+
+    req.open("POST", "/requests/addRights.php", false);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.send("userid=" + userid + "&boardid=" + boardid + "&rights=" + rights);
+}
+function delRights(userid, boardid){
+    var req = new XMLHttpRequest();
+    var res;
+
+    req.open("POST", "/requests/delRights.php", false);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.send("userid=" + userid + "&boardid=" + boardid);
+}
 
 function userToId(name){
     var req = new XMLHttpRequest();
@@ -81,13 +100,41 @@ function fillRightsTable(boardid){
         var cellName = newRow.insertCell(0);
         var cellRights = newRow.insertCell(1);
         var cellDel = newRow.insertCell(2);
-        cellName.innerHTML = "<p contenteditable='true'>" + idToUser(v.userid) + "</p>";
-        cellRights.innerHTML = '<input type="checkbox">Write';
+
+        var newP = document.createElement("p");
+        newP.setAttribute("contenteditable", "true");
+        newP.innerHTML = idToUser(v.userid);
+        newP.addEventListener("keydown", function(e){
+            if(e.which == 13){
+                e.preventDefault();
+                newP.blur();
+            }
+        })
+        cellName.appendChild(newP);
+
+        if(v.rights == "true" || v.rights == true){
+            cellRights.innerHTML = '<input type="checkbox" checked>Write';
+        }else{
+            cellRights.innerHTML = '<input type="checkbox">Write';
+        }
         cellDel.innerHTML = 'X';
+
+        cellDel.addEventListener("click", function(e){
+            var row = e.target.parentNode;
+            var uid = userToId(row.cells[0].innerText);
+            if(isNaN(uid)){
+                row.remove();
+            }else{
+                delRights(uid, boardid_selected);
+            }
+            fillRightsTable(boardid_selected);
+        });
     });
 }
 
 function fillBoardsList(){
+    boards = {};
+
     // owned
     var req = new XMLHttpRequest();
     var res;
@@ -100,6 +147,12 @@ function fillBoardsList(){
         res = JSON.parse(req.responseText);
     }else{
         return;
+    }
+
+    for(var i in res){
+        boards[res[i].id] = {
+            write: true
+        }
     }
 
     // with rights
@@ -116,6 +169,12 @@ function fillBoardsList(){
         return;
     }
 
+    for(var i in resr){
+        boards[resr[i].id] = {
+            write: resr[i].rights == "true"
+        }
+    }
+
     boardList.innerHTML = "";
 
     // total
@@ -125,6 +184,8 @@ function fillBoardsList(){
         var v = tot[key];
         var newDiv = document.createElement("div");
         newDiv.setAttribute("class", "board");
+        if(v.rights == undefined)
+            newDiv.classList.add("owned");
         newDiv.setAttribute("boardid", v.id);
         newDiv.addEventListener("click", function(ev){
             var target = ev.target;
@@ -137,14 +198,17 @@ function fillBoardsList(){
                 clearInterval(el);
             });
             timers = [];
-            // save all postits
-            Array.from(postitHolder.children).forEach(function(el){
-                savePostit(el.getAttribute("postitid"), boardid_selected, el.innerText);
-            });
+            if(boards[boardid_selected] && boards[boardid_selected].write){
+                // save all postits
+                Array.from(postitHolder.children).forEach(function(el){
+                    savePostit(el.getAttribute("postitid"), boardid_selected, el.innerText);
+                });
+            }
             // change board
             target.focus();
-            fillPostitHolder(targetID);
             boardid_selected = targetID;
+            fillPostitHolder(targetID);
+            
 
             /* color */
             Array.from(boardList.children).forEach(function(val){
@@ -152,7 +216,9 @@ function fillBoardsList(){
             });
             target.style.backgroundColor = "#CCC";
 
-            boardButtonContainer.setAttribute("class", "board_button_show");
+            boardButtonContainer.setAttribute("class", "");
+            if(boards[boardid_selected].write)
+                boardButtonContainer.setAttribute("class", "board_button_show");
 
         });
         
@@ -191,43 +257,52 @@ function fillPostitHolder(id){
     for(var v in res){
         var timer;
         var newDiv = document.createElement("div");
-        newDiv.setAttribute("contenteditable", "true");
+        if(boards[boardid_selected].write)
+            newDiv.setAttribute("contenteditable", "true");
         newDiv.setAttribute("class", "postit");
         newDiv.setAttribute("postitid", v);
         newDiv.innerHTML = "<p>" + res[v] + "</p>";
 
-        newDiv.addEventListener("focusout", function(e){
-            clearInterval(timer);
-            savePostit(postitid_selected, boardid_selected, e.target.innerText, false);
-            buttonPostitHolder.setAttribute("class", "postit_button_holder_up1");
-        });
+        if(boards[boardid_selected].write){
+            newDiv.addEventListener("focusout", function(e){
+                clearInterval(timer);
+                savePostit(postitid_selected, boardid_selected, e.target.innerText, false);
+                buttonPostitHolder.setAttribute("class", "postit_button_holder_up1");
+            });
 
-        newDiv.addEventListener("focusin", function(e){
-            postitid_selected = e.target.getAttribute("postitid");
-            buttonPostitHolder.setAttribute("class", "postit_button_holder_up2");
-        });
+            newDiv.addEventListener("focusin", function(e){
+                postitid_selected = e.target.getAttribute("postitid");
+                buttonPostitHolder.setAttribute("class", "postit_button_holder_up2");
+            });
 
-        var currTime = 0;
-        newDiv.addEventListener("keydown", function(e){
-            currTime = 0;
-            if(timer == undefined){
-                timer = setInterval(function(){
-                    if(currTime > 2){
-                        clearInterval(timer);
-                        timer = undefined;
-                        savePostit(postitid_selected, boardid_selected, e.target.innerText, true);
-                    }
-                    currTime++;
-                }, 1000);
-                timers.push(timer);
-            }
-        });
+            var currTime = 0;
+            newDiv.addEventListener("keydown", function(e){
+                currTime = 0;
+                if(timer == undefined){
+                    timer = setInterval(function(){
+                        if(currTime > 2){
+                            clearInterval(timer);
+                            timer = undefined;
+                            savePostit(postitid_selected, boardid_selected, e.target.innerText, true);
+                        }
+                        currTime++;
+                    }, 1000);
+                    timers.push(timer);
+                }
+            });
+        }
 
         postitHolder.appendChild(newDiv);
     }
 
-    settingsButton.setAttribute("class", "available_settings");
-    buttonPostitHolder.setAttribute("class", "postit_button_holder_up1");
+    if(boards[boardid_selected].write){
+        settingsButton.setAttribute("class", "available_settings");
+        buttonPostitHolder.setAttribute("class", "postit_button_holder_up1");
+    }else{
+        settingsButton.setAttribute("class", "");
+        buttonPostitHolder.setAttribute("class", "");
+    }
+    
 
 }
 
@@ -351,6 +426,13 @@ window.addEventListener("load", function(){
     closeSettingsButton.addEventListener("click", function(){
         /* save */
         setBoardName(boardid_selected, boardNameInput.value);
+        /* read table and save rights */
+        for(var i = 0; i < rightsTable.rows.length; i++){
+            var row = rightsTable.rows[i];
+            var uid = userToId(row.cells[0].innerText);
+            if(!isNaN(uid) && row.cells[0].innerText != username)
+                addRights(uid, boardid_selected, row.cells[1].querySelector("input").checked);
+        }
 
         /* quit */
         settingsWindow.style.display = "none";
@@ -362,9 +444,39 @@ window.addEventListener("load", function(){
         var cellName = newRow.insertCell(0);
         var cellRights = newRow.insertCell(1);
         var cellDel = newRow.insertCell(2);
-        cellName.innerHTML = "<p contenteditable='true'>username</p>"
+
+        var newP = document.createElement("p");
+        newP.setAttribute("contenteditable", "true");
+        newP.innerHTML = "username";
+        newP.addEventListener("keydown", function(e){
+            if(e.which == 13){
+                e.preventDefault();
+                newP.blur();
+            }
+        })
+        cellName.appendChild(newP);
+
         cellRights.innerHTML = '<input type="checkbox">Write';
         cellDel.innerHTML = 'X';
+
+        cellDel.addEventListener("click", function(e){
+            var row = e.target.parentNode;
+            var uid = userToId(row.cells[0].innerText);
+            if(isNaN(uid)){
+                row.remove();
+            }else{
+                delRights(uid, boardid_selected);
+            }
+        });
+
+        //focus
+        newP.focus();
+        // select all text
+        var range = document.createRange();
+        var selection = window.getSelection();
+        range.selectNodeContents(newP);
+        selection.removeAllRanges();
+        selection.addRange(range);
     });
 
     // save before quitting
